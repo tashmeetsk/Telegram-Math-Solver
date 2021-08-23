@@ -1,40 +1,80 @@
-# import the following libraries
-# will convert the image to text string
-import pytesseract	
+import webbrowser, pyautogui, time, cv2, pytesseract
+pytesseract.pytesseract.tesseract_cmd = (r'C:\Program Files\Tesseract-OCR\tesseract.exe')
+firefox = "C:/Program Files/Mozilla Firefox/firefox.exe %s"
+webbrowser.get(firefox).open_new("https://bit.ly/3dI9XPt")
 
-# adds image processing capabilities
-from PIL import Image	
+time.sleep(1)
+pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Play.png')
+pyautogui.move(500,0)
 
-# converts the text to speech
-import pyttsx3		
+def solver():
+      
+    time.sleep(0.3)
+    pyautogui.screenshot('equation.png', region = (482, 244, 375, 155))
+    
+    time.sleep(1)
+    img = cv2.imread('equation.png')
+    img2 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    (thresh, blackAndWhiteImage) = cv2.threshold(img2, 175, 255, cv2.THRESH_BINARY)
+    blackAndWhiteImage2 = cv2.bitwise_not(blackAndWhiteImage)
 
-#translates into the mentioned language
-from googletrans import Translator	
+    result = pytesseract.image_to_string(blackAndWhiteImage2)
+    print(result)
 
-# opening an image from the source path
-img = Image.open('text1.png')	
+    if '§' in result:
+        result = result.replace('§', '5')
 
-# describes image format in the output
-print(img)						
-# path where the tesseract module is installed
-pytesseract.pytesseract.tesseract_cmd ='C:/Program Files (x86)/Tesseract-OCR/tesseract.exe'
-# converts the image to result and saves it into result variable
-result = pytesseract.image_to_string(img)
-print(result)
-print(int(result))
-=======
-# write text in a text file and save it to source path
-with open('abc.txt',mode ='w') as file:	
-	
-				file.write(result)
-				print(result)
-				
-p = Translator()					
-# translates the text into german language
-k = p.translate(result,dest='german')	
-print(k)
-engine = pyttsx3.init()
+    numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    op = ['+', '-','x', '/','=','—']
 
-# an audio will be played which speaks the test if pyttsx3 recognizes it
-engine.say(k)							
-engine.runAndWait()
+    a,b,c,f = ([] for i in range(4))
+
+    x = list(result)
+
+    '''for i in x:
+        if i in op or i in numbers:
+            if i in op and i in f:
+                continue
+            else:
+                f.append(i)'''
+
+    f = [i for i in x if i in op or i in numbers]
+
+    flag = 0
+    for i in f:
+        if i not in op and flag == 0:
+            a.append(i)
+        elif i not in op and flag == 1:
+            b.append(i)
+        elif i not in op and flag == 2:
+            c.append(i)
+        else:
+            if i == '=':
+                flag = 2
+            else:
+                flag = 1
+                opt = i
+
+    y = int(''.join(a))
+    z = int(''.join(b))
+    w = int(''.join(c))
+
+    def calc(l,m,n):
+        isEqual = False
+        check = [l+m, l-m, l*m, l/m]
+        if n in check:
+            isEqual = True
+        return isEqual
+
+    lmao = calc(y,z,w)
+    print(lmao)
+
+    if lmao == True:
+        pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Correct.png')
+    else:
+        pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Incorrect.png')
+        
+    pyautogui.move(500,0)
+    
+while True:
+    solver()
