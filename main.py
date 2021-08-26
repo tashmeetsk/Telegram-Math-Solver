@@ -21,24 +21,19 @@ def solver():
     result = pytesseract.image_to_string(blackAndWhiteImage2)
     print(result)
 
-    dict1 = {'§': '5', '%': 'x', '—': '-'} 
+    dict1 = {'§':'5', '%':'x', '—':'-'} 
         for i in dict1.keys():
             if i in result:
                 result = result.replace(i, dict1[i])
 
     numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-    op = ['+', '-','x', '/','=']
+    op = ['+', '-', 'x', '/', '=']
 
     a,b,c,f = ([] for i in range(4))
 
     x = list(result)
 
-    for i in x:
-        if i in op or i in numbers:
-            if i in op and i in f:
-                continue
-            else:
-                f.append(i)
+    f = [i for i in x if i in op or i in numbers]  
 
     flag = 0
     for i in f:
@@ -66,10 +61,10 @@ def solver():
             isEqual = True
         return isEqual
 
-    lmao = calc(y,z,w)
-    print(lmao)
+    check = calc(y,z,w)
+    print(check)
 
-    if lmao == True:
+    if check == True:
         pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Correct.png')
     else:
         pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Incorrect.png')
