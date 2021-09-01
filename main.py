@@ -22,9 +22,9 @@ def solver():
     print(result)
 
     dict1 = {'§':'5', '%':'x', '—':'-'} 
-        for i in dict1.keys():
-            if i in result:
-                result = result.replace(i, dict1[i])
+    for i in dict1.keys():
+        if i in result:
+            result = result.replace(i, dict1[i])
 
     numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
     op = ['+', '-', 'x', '/', '=']
