@@ -2,4 +2,4 @@
 This is a program which is gonna solve the MATHS BATTLE by @gamebot using pytesseract.
 
 ### Google Drive link:  
-https://drive.google.com/drive/folders/1fLbzKpOJpeDyvTfjuc2xDpJLquerCJUl
+https://drive.google.com/drive/folders/1pkRgWsLz1g6kNwLr-bqlNWemNj86-yce?usp=sharing
