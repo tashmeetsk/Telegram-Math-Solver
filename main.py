@@ -4,7 +4,7 @@ firefox = "C:/Program Files/Mozilla Firefox/firefox.exe %s"
 webbrowser.get(firefox).open_new("https://bit.ly/3dI9XPt")
 
 time.sleep(1)
-pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Play.png')
+pyautogui.click(r'Play.png')
 pyautogui.move(500,0)
 
 def solver():
@@ -65,9 +65,9 @@ def solver():
     print(check)
 
     if check == True:
-        pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Correct.png')
+        pyautogui.click(r'Correct.png')
     else:
-        pyautogui.click(r'C:\Users\dell\AppData\Local\Programs\Python\Python39\Project\Incorrect.png')
+        pyautogui.click(r'Incorrect.png')
         
     pyautogui.move(500,0)
     
