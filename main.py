@@ -2,6 +2,7 @@ import webbrowser, pyautogui, time, cv2, pytesseract
 pytesseract.pytesseract.tesseract_cmd = (r'C:\Program Files\Tesseract-OCR\tesseract.exe')
 firefox = "C:/Program Files/Mozilla Firefox/firefox.exe %s"
 webbrowser.get(firefox).open_new("http://tbot.xyz/math")
+pyautogui.hotkey('win','up')
 
 time.sleep(1)
 pyautogui.click(r'Play.png')
