@@ -2,9 +2,10 @@
 This is a program which is gonna solve the MATHS BATTLE by @gamebot using selenium webscraping.
 
 ### Requirements:
-1. [Mizolla Firefox](https://www.mozilla.org/en-US/firefox/new/)  webbrowser
-2. Selenium webdriver for firefox...that is the [Geckodriver](https://github.com/mozilla/geckodriver/releases). (_Install it as per your system requirements_)
-3. Install the library for selenium...
+1. [Python3](https://www.python.org/downloads/) (_Install it as per your system requirements_)
+2. [Mizolla Firefox](https://www.mozilla.org/en-US/firefox/new/)  webbrowser
+3. Selenium webdriver for firefox...that is the [Geckodriver](https://github.com/mozilla/geckodriver/releases). (_Install it as per your system requirements_)
+4. Install the library for selenium...
    - Open command prompt
    - Type `pip install selenium`, press enter
    - After installation close the command prompt.
