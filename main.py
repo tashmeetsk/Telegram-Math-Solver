@@ -1,76 +1,49 @@
-import webbrowser, pyautogui, time, cv2, pytesseract
-pytesseract.pytesseract.tesseract_cmd = (r'C:\Program Files\Tesseract-OCR\tesseract.exe')
-firefox = "C:/Program Files/Mozilla Firefox/firefox.exe %s"
-webbrowser.get(firefox).open_new("http://tbot.xyz/math")
-pyautogui.hotkey('win','up')
+from selenium import webdriver
 
-time.sleep(1)
-pyautogui.click(r'Play.png')
-pyautogui.move(500,0)
 
-def solver():
-      
-    time.sleep(0.3)
-    pyautogui.screenshot('equation.png', region = (482, 244, 375, 155))
-    
-    time.sleep(1)
-    img = cv2.imread('equation.png')
-    img2 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    (thresh, blackAndWhiteImage) = cv2.threshold(img2, 175, 255, cv2.THRESH_BINARY)
-    blackAndWhiteImage2 = cv2.bitwise_not(blackAndWhiteImage)
+def solver(flag):
+    x = int(driver.find_element_by_id("task_x").text)
+    y = int(driver.find_element_by_id("task_y").text)
+    op = str(driver.find_element_by_id("task_op").text)
+    game_ans = int(driver.find_element_by_id("task_res").text)
 
-    result = pytesseract.image_to_string(blackAndWhiteImage2)
-    print(result)
-
-    dict1 = {'§':'5', '%':'x', '—':'-'} 
-    for i in dict1.keys():
-        if i in result:
-            result = result.replace(i, dict1[i])
-
-    numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-    op = ['+', '-', 'x', '/', '=']
-
-    a,b,c,f = ([] for i in range(4))
-
-    x = list(result)
-
-    f = [i for i in x if i in op or i in numbers]  
-
-    flag = 0
-    for i in f:
-        if i not in op and flag == 0:
-            a.append(i)
-        elif i not in op and flag == 1:
-            b.append(i)
-        elif i not in op and flag == 2:
-            c.append(i)
-        else:
-            if i == '=':
-                flag = 2
-            else:
-                flag = 1
-                opt = i
-
-    y = int(''.join(a))
-    z = int(''.join(b))
-    w = int(''.join(c))
-
-    def calc(l,m,n):
-        isEqual = False
-        check = [l+m, l-m, l*m, l/m]
-        if n in check:
-            isEqual = True
-        return isEqual
-
-    check = calc(y,z,w)
-    print(check)
-
-    if check == True:
-        pyautogui.click(r'Correct.png')
+    if op == '/' and y == 0:   #we don't want the program to divide by 0
+        final_ans = None
     else:
-        pyautogui.click(r'Incorrect.png')
-        
-    pyautogui.move(500,0)
-    
-while True:
-    solver()
+        dict1 = {'–': x - y, '+': x + y, '×': x * y, '/': x / y}
+        final_ans = dict1[op]
+
+    if flag == 0:
+        if game_ans == final_ans:
+            driver.find_element_by_id("button_correct").click()
+        else:
+            driver.find_element_by_id("button_wrong").click()
+
+    else:
+        if game_ans == final_ans:
+            driver.find_element_by_id("button_wrong").click()
+        else:
+            driver.find_element_by_id("button_correct").click()
+
+
+website = input('''Please enter the tbot site...
+Press Return/Spacebar to continue by the default website \n''')
+
+print()
+
+ask = int(input('Upto which number would you like to score (enter value in +ve interger): '))
+
+driver = webdriver.Firefox(executable_path=r'C:\Program Files (x86)\geckodriver.exe')
+
+if website == '' or website == ' ':
+    driver.get("https://tbot.xyz/math/")
+else:
+    driver.get(website)
+
+play = driver.find_element_by_id("button_correct").click()
+
+for i in range(0, ask):
+    solver(flag=0)
+
+for i in range(0, 3):
+    solver(flag=1)
