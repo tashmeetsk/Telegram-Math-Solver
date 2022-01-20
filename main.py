@@ -5,22 +5,22 @@ def solver(flag):
     x = int(driver.find_element_by_id("task_x").text)
     y = int(driver.find_element_by_id("task_y").text)
     op = str(driver.find_element_by_id("task_op").text)
-    GameAns = int(driver.find_element_by_id("task_res").text)
+    game_ans = int(driver.find_element_by_id("task_res").text)
 
-    if op == "/" and y == 0:
-        FinalAns = None
+    if op == "/" and y == 0:    # We don't want the program to divide by 0
+        final_ans = None
     else:
-        Dict = {"–": x.__sub__, "+": x.__add__, "×": x.__mul__, "/": x.__truediv__}
-        FinalAns = Dict[op](y)
+        operation = {"–": x.__sub__, "+": x.__add__, "×": x.__mul__, "/": x.__truediv__}
+        final_ans = operation[op](y)
 
     if flag == 0:
-        if GameAns == FinalAns:
+        if game_ans == final_ans:
             driver.find_element_by_id("button_correct").click()
         else:
             driver.find_element_by_id("button_wrong").click()
 
     else:
-        if GameAns == FinalAns:
+        if game_ans == final_ans:
             driver.find_element_by_id("button_wrong").click()
         else:
             driver.find_element_by_id("button_correct").click()
@@ -29,7 +29,7 @@ def solver(flag):
 ask = input('Do you have the link of the website [y/n]: ')
 
 if ask.lower() == 'y':
-    website = input('''\nPlease enter the tbot site...
+    website = input('''\nPlease enter the math solver site...
 Press Return key to continue by the default website \n''')
 else:
     website = "https://tbot.xyz/math/"
@@ -38,7 +38,7 @@ print()
 
 while True:
     try:
-        ask = int(input('Upto which number would you like to score (enter value in +ve interger): '))
+        ask = int(input('Up to which number would you like to score (enter value in +ve integer): '))
     except ValueError:
         print('\nPlease enter a valid number...')
     else:
