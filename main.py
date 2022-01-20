@@ -5,44 +5,54 @@ def solver(flag):
     x = int(driver.find_element_by_id("task_x").text)
     y = int(driver.find_element_by_id("task_y").text)
     op = str(driver.find_element_by_id("task_op").text)
-    game_ans = int(driver.find_element_by_id("task_res").text)
+    GameAns = int(driver.find_element_by_id("task_res").text)
 
-    if op == '/' and y == 0:   #we don't want the program to divide by 0
-        final_ans = None
+    if op == "/" and y == 0:
+        FinalAns = None
     else:
-        dict1 = {'–': x - y, '+': x + y, '×': x * y, '/': x / y}
-        final_ans = dict1[op]
+        Dict = {"–": x.__sub__, "+": x.__add__, "×": x.__mul__, "/": x.__truediv__}
+        FinalAns = Dict[op](y)
 
     if flag == 0:
-        if game_ans == final_ans:
+        if GameAns == FinalAns:
             driver.find_element_by_id("button_correct").click()
         else:
             driver.find_element_by_id("button_wrong").click()
 
     else:
-        if game_ans == final_ans:
+        if GameAns == FinalAns:
             driver.find_element_by_id("button_wrong").click()
         else:
             driver.find_element_by_id("button_correct").click()
 
 
-website = input('''Please enter the tbot site...
-Press Return/Spacebar to continue by the default website \n''')
+ask = input('Do you have the link of the website [y/n]: ')
+
+if ask.lower() == 'y':
+    website = input('''\nPlease enter the tbot site...
+Press Return key to continue by the default website \n''')
+else:
+    website = "https://tbot.xyz/math/"
 
 print()
 
-ask = int(input('Upto which number would you like to score (enter value in +ve interger): '))
+while True:
+    try:
+        ask = int(input('Upto which number would you like to score (enter value in +ve interger): '))
+    except ValueError:
+        print('\nPlease enter a valid number...')
+    else:
+        break
+    if ask < 0:
+        print('\nPlease enter a valid number...')
 
 driver = webdriver.Firefox(executable_path=r'C:\Program Files (x86)\geckodriver.exe')
 
-if website == '' or website == ' ':
-    driver.get("https://tbot.xyz/math/")
-else:
-    driver.get(website)
+driver.get(website)
 
 play = driver.find_element_by_id("button_correct").click()
 
-for i in range(0, ask):
+for i in range(0, int(ask)):
     solver(flag=0)
 
 for i in range(0, 3):
