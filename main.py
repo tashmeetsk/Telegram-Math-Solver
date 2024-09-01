@@ -1,11 +1,12 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 def solver(flag):
-    x = int(driver.find_element_by_id("task_x").text)
-    y = int(driver.find_element_by_id("task_y").text)
-    op = str(driver.find_element_by_id("task_op").text)
-    game_ans = int(driver.find_element_by_id("task_res").text)
+    x = int(driver.find_element(By.ID, "task_x").text)
+    y = int(driver.find_element(By.ID, "task_y").text)
+    op = str(driver.find_element(By.ID, "task_op").text)
+    game_ans = int(driver.find_element(By.ID, "task_res").text)
 
     if op == "/" and y == 0:    # We don't want the program to divide by 0
         final_ans = None
@@ -15,15 +16,15 @@ def solver(flag):
 
     if flag == 0:
         if game_ans == final_ans:
-            driver.find_element_by_id("button_correct").click()
+            driver.find_element(By.ID, "button_correct").click()
         else:
-            driver.find_element_by_id("button_wrong").click()
+            driver.find_element(By.ID, "button_wrong").click()
 
     else:
         if game_ans == final_ans:
-            driver.find_element_by_id("button_wrong").click()
+            driver.find_element(By.ID, "button_wrong").click()
         else:
-            driver.find_element_by_id("button_correct").click()
+            driver.find_element(By.ID, "button_correct").click()
 
 
 ask = input('Do you have the link of the website [y/n]: ')
@@ -46,11 +47,12 @@ while True:
     if ask < 0:
         print('\nPlease enter a valid number...')
 
-driver = webdriver.Firefox(executable_path=r'C:\Program Files (x86)\geckodriver.exe')
+option = webdriver.FirefoxOptions()
+driver = webdriver.Firefox(options = option)
 
 driver.get(website)
 
-play = driver.find_element_by_id("button_correct").click()
+play = driver.find_element(By.ID, "button_correct").click()
 
 for i in range(0, int(ask)):
     solver(flag=0)
